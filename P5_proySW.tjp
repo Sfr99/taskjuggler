@@ -156,14 +156,14 @@ task WMGame "Web & Mobile Game" {
 
   task tmobF "Mobile Front End" {
     chargeset mFront  
-    responsible dev3, dev4
+    responsible dev4
     depends WMGame.tback.tBEd
 
     task tGUIm "Mobile GUI Design" {
       effort 10d
-      allocate dev3, dev4
+      allocate dev4
       journalentry 2025-04-04 "Problema con la herramienta de diseño" {
-        author dev3
+        author dev4
         alert yellow
         summary "El equipo ha encontrado un problema con la herramienta de diseño de la interfaz Móvil."
       }
@@ -172,13 +172,13 @@ task WMGame "Web & Mobile Game" {
 
     task tFEm "Mobile Front End Construction" {
       effort 15d
-      allocate dev1, dev3, dev4
+      allocate dev4
       depends WMGame.tmobile.tGUIm
     }
 
     task tFEmTest "Mobile Front End Testing" {
       effort 5d
-      allocate dev1, dev4
+      allocate dev4
       depends WMGame.tmobile.tFEm
     }
   }
