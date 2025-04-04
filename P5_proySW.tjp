@@ -168,7 +168,6 @@ task WMGame "Web & Mobile Game" {
         alert yellow
         summary "El equipo ha encontrado un problema con la herramienta de diseño de la interfaz Móvil."
       }
-      depends WMGame.tmobile
     }
 
     task tFEm "Mobile Front End Construction" {
@@ -194,7 +193,6 @@ task WMGame "Web & Mobile Game" {
     task tcloudEval "Cloud Platform Evaluation" {
       effort 4d
       allocate dev1
-      depends WMGame.tcloud
     }
 
     task tcloudDec "Cloud Decision" {
