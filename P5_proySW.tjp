@@ -19,7 +19,7 @@ project pSix "Web Game"  2024-12-15 +5m {
   # the project reports. If not specified, the current day will be
   # used, but this will likely be outside of the project range, so it
   # can't be seen in the reports.
-  now 2025-02-25-13:00
+  now 2025-04-04-16:30
   # The currency for all money values is the US Dollar.
   currency "EUR"
 
@@ -67,6 +67,10 @@ resource dev2 "Samantha Müller" {
 }
 resource dev3 "Peter Green" {
   email "kkk@unizar.es"
+}
+resource dev4 "Javier Salafranca" {
+  email "816341@unizar.es"
+  rate 4
 }
 
 # Now we specify the work packages. The whole project is described as
@@ -147,11 +151,70 @@ task WMGame "Web & Mobile Game" {
     }    
   }
 
+  task tmobF "Mobile Front End" {
+    chargeset mFront
+    responsible dev3, dev4
+    depends WMGAME.tback.tBEd
+
+    task tGUIm "Mobile GUI Design" {
+      effort 10d
+      allocate dev3, dev4
+      journalentry 2025-04-04 "Problema con la herramienta de diseño" {
+        author dev3
+        alert yellow
+        summary "El equipo ha encontrado un problema con la herramienta de diseño de la interfaz Móvil."
+      }
+      depends WMGame.tmobile
+    }
+    
+    task tFEm "Mobile Front End Construction" {
+      effort 15d
+      allocate dev1, dev3, dev4
+      depends WMGame.tmobile.tGUIm
+    }
+
+    task tFEmTest "Mobile Front End Testing" {
+      effort 5d
+      allocate dev1, dev4
+      depends WMGame.tmobile.tFEm
+    }
+  }
+
+  task tcloud "Cloud Deployment" {
+    chargeset back
+    responsible dev1
+    depends WMGame.tback.tBEd
+    
+    task tcloudEval "Cloud Platform Evaluation" {
+      effort 4d
+      allocate dev1
+      depends WMGame.tcloud
+    }
+
+    task tcloudDeploy "Cloud Deployment" {
+      effort 7d
+      allocate dev1
+      depends WMGame.tcloud.tcloudEval
+    }
+    
+    task tcloudTest "Cloud Deployment Testing" {
+      effort 5d
+      allocate dev2
+      depends WMGame.tcloud.tcloudDeploy
+    }
+  }
+}
+
+
+
+
+
   task ttest "Acceptance tests" {
       effort 10d
       allocate boss
       allocate dev2
       actual:effort 20d
+      start 2025-05-15 
       depends WMGame.twebF
       depends WMGame.tback
       }
@@ -212,6 +275,9 @@ macro TaskTip [
     ->8-
 ]
 
+
+
+
 textreport frame "" {
   header -8<-
     == Accounting Project Web Game ==
@@ -270,6 +336,22 @@ taskreport overview "" {
   caption 'All effort values are in man days.'
 }
 
+taskreport initialPlan "" {
+  scenarios plan  
+  headline "Initial Project Plan" 
+  columns bsi { title 'WBS' },  
+          name { title 'Task Name' },  
+          start { title 'Start Date' },  
+          end { title 'End Date' },  
+          effort { title 'Effort' },  
+          cost { title 'Cost' }, 
+          revenue { title 'Revenue' },  
+          chart { scale day width 500 } 
+  timeformat "%Y-%m-%d"  
+  loadunit days  
+  balance cost rev 
+  caption "Initial project planning overview"  
+}
 
 # Macro to set the background color of a cell according to the alert
 # level of the task.
