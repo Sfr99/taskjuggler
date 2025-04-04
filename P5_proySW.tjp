@@ -127,9 +127,10 @@ task WMGame "Web & Mobile Game" {
 
   task twebF "Web Front End" {
     purge chargeset
-    chargeset wFront
+    chargeset wFront  
     responsible dev3
     depends WMGame.tback.tBEd
+    
     task tGUId "Web GUI Design" {
       effort 9d
       actual:effort 15d
@@ -140,6 +141,7 @@ task WMGame "Web & Mobile Game" {
         summary "The tool used for the GUI design has given me a lot of problems. I recommend to look for other one."
       }
     }
+    
     task tFEc "Web Front End Construction" {
       effort 15d
       allocate dev2, dev3
@@ -149,13 +151,13 @@ task WMGame "Web & Mobile Game" {
       effort 6d
       allocate dev1
       depends WMGame.twebF.tFEc
-    }    
+    }
   }
 
   task tmobF "Mobile Front End" {
-    chargeset mFront
+    chargeset mFront  
     responsible dev3, dev4
-    depends WMGAME.tback.tBEd
+    depends WMGame.tback.tBEd
 
     task tGUIm "Mobile GUI Design" {
       effort 10d
@@ -167,7 +169,7 @@ task WMGame "Web & Mobile Game" {
       }
       depends WMGame.tmobile
     }
-    
+
     task tFEm "Mobile Front End Construction" {
       effort 15d
       allocate dev1, dev3, dev4
@@ -180,6 +182,7 @@ task WMGame "Web & Mobile Game" {
       depends WMGame.tmobile.tFEm
     }
   }
+
 
   task tcloud "Cloud Deployment" {
     chargeset cloud
